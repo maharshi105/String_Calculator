@@ -3,7 +3,7 @@ using namespace std;
 class StringCalculator
 {
 public:
-    StringCalculator() : delimiter(",") {}
+    StringCalculator() : delimiter(",\n") {}
 
     int add(const string &numbers)
     {
@@ -52,6 +52,6 @@ int main()
     cout << "Result of empty string: " << calculator.add("") << endl;
     cout << "Result of '1': " << calculator.add("1") << endl;
     cout << "Result of '1,2,3': " << calculator.add("1,2,3") << endl;
-
+    cout << "Result of '1\\n2,3': " << calculator.add("1\n2,3") << endl;
     return 0;
 }
