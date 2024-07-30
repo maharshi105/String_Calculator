@@ -22,13 +22,33 @@ public:
 
         vector<string> tokens = split(numbersCopy, delimiter);
         int sum = 0;
+        vector<int> negativeNumbers;
+
         for (const string &token : tokens)
         {
             if (!token.empty())
             {
                 int num = stoi(token);
+                if (num < 0)
+                {
+                    negativeNumbers.push_back(num);
+                }
                 sum += num;
             }
+        }
+        if (!negativeNumbers.empty())
+        {
+            ostringstream oss;
+            oss << "Negatives not allowed: ";
+            for (int i = 0; i < negativeNumbers.size(); ++i)
+            {
+                if (i != 0)
+                {
+                    oss << ", ";
+                }
+                oss << negativeNumbers[i];
+            }
+            throw runtime_error(oss.str());
         }
 
         return sum;
@@ -54,12 +74,19 @@ private:
 int main()
 {
     StringCalculator calculator;
-
-    cout << "Result of empty string: " << calculator.add("") << endl;
-    cout << "Result of '1': " << calculator.add("1") << endl;
-    cout << "Result of '1,2,3': " << calculator.add("1,2,3") << endl;
-    cout << "Result of '1\\n2,3': " << calculator.add("1\n2,3") << endl;
-    cout << "Result of '//;\\n1;2': " << calculator.add("//;\n1;2") << endl;
+    try
+    {
+        cout << "Result of empty string: " << calculator.add("") << endl;
+        cout << "Result of '1': " << calculator.add("1") << endl;
+        cout << "Result of '1,2,3': " << calculator.add("1,2,3") << endl;
+        cout << "Result of '1\\n2,3': " << calculator.add("1\n2,3") << endl;
+        cout << "Result of '//;\n1;2': " << calculator.add("//;\n1;2") << endl;
+        cout << "Result of '-1,2,3': " << calculator.add("-1,2,3") << endl;
+    }
+    catch (const runtime_error &e)
+    {
+        cerr << "Exception: " << e.what() << endl;
+    }
 
     return 0;
 }
