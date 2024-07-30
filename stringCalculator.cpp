@@ -13,6 +13,12 @@ public:
         }
 
         string numbersCopy = numbers;
+        if (numbersCopy.substr(0, 2) == "//")
+        {
+            int delimiterEnd = numbersCopy.find('\n');
+            delimiter = numbersCopy.substr(2, delimiterEnd - 2);
+            numbersCopy = numbersCopy.substr(delimiterEnd + 1);
+        }
 
         vector<string> tokens = split(numbersCopy, delimiter);
         int sum = 0;
@@ -53,5 +59,7 @@ int main()
     cout << "Result of '1': " << calculator.add("1") << endl;
     cout << "Result of '1,2,3': " << calculator.add("1,2,3") << endl;
     cout << "Result of '1\\n2,3': " << calculator.add("1\n2,3") << endl;
+    cout << "Result of '//;\\n1;2': " << calculator.add("//;\n1;2") << endl;
+
     return 0;
 }
